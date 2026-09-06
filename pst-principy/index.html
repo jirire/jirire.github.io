@@ -64,7 +64,10 @@
 
 * { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+/* Lehké zmenšení celé stránky (cca 12,5 %): protože skoro všechny rozměry
+   v tomto souboru jsou v rem, stačí zmenšit základní velikost písma a
+   automaticky se zmenší i mezery, šířky bloků atd. */
+html { font-size: 87.5%; -webkit-text-size-adjust: 100%; }
 
 /* --- ZÁKLADNÍ TEXT -------------------------------------------------------
    font-size    velikost běžného textu (naměřeno z originálu: 1.075rem)
@@ -413,7 +416,7 @@ strong { font-weight: 600; }
   color: var(--ink-soft);
 }
 .site-foot p { max-width: 46rem; margin: 0 auto 0.9rem; }
-.badge { width: 176px; margin: 0 auto 1.5rem; }
+.badge { width: 154px; margin: 0 auto 1.5rem; }
 
 /* =========================================================================
    ZLOMY PRO MENŠÍ OBRAZOVKY
