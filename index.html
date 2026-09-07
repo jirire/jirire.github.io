@@ -64,7 +64,10 @@
 
 * { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+/* Lehké zmenšení celé stránky (cca 12,5 %): protože skoro všechny rozměry
+   v tomto souboru jsou v rem, stačí zmenšit základní velikost písma a
+   automaticky se zmenší i mezery, šířky bloků atd. */
+html { font-size: 87.5%; -webkit-text-size-adjust: 100%; }
 
 /* --- ZÁKLADNÍ TEXT -------------------------------------------------------
    font-size    velikost běžného textu (naměřeno z originálu: 1.075rem)
@@ -124,10 +127,9 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
    ten řádek pro normální psaní. letter-spacing je prostrkání písmen. */
 .nav a {
   font-family: var(--sans);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
   color: var(--ink-soft);
   text-decoration: none;
   padding-bottom: 2px;
@@ -233,7 +235,7 @@ strong { font-weight: 600; }
   text-align: center;
   max-width: none;
   margin: 0;
-  padding: 2rem 0;
+  padding: 1.6rem 0;
 }
 
 /* six-across photo grid */
@@ -413,7 +415,7 @@ strong { font-weight: 600; }
   color: var(--ink-soft);
 }
 .site-foot p { max-width: 46rem; margin: 0 auto 0.9rem; }
-.badge { width: 176px; margin: 0 auto 1.5rem; }
+.badge { width: 154px; margin: 0 auto 1.5rem; }
 
 /* =========================================================================
    ZLOMY PRO MENŠÍ OBRAZOVKY
@@ -459,7 +461,7 @@ strong { font-weight: 600; }
 <header class="site-head">
   <div class="wrap">
     <nav class="nav" aria-label="Hlavní menu">
-      <a href="./" aria-current="page">Úvod</a>
+      <a href="./" aria-current="page">úvod</a>
       <a href="pst-principy/">psychoterapie + principy</a>
       <a href="dalsi-vzdelani/">další vzdělání</a>
       <a href="osobni-udaje/">osobní údaje</a>
