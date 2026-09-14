@@ -116,21 +116,45 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .site-head {
   background: var(--bg);
 }
-.site-head .wrap { max-width: none; }
-.site-head .wrap {
+.site-head .wrap { max-width: none; padding: 0 1.5rem; }
+
+/* Skrytý checkbox pohání celé rozbalování menu - žádný JavaScript.
+   Musí být sourozenec .head a .row (ne jejich rodič), jinak selektory
+   s "~" o kousek níž nenajdou svůj cíl. */
+.menu-input { position: absolute; opacity: 0; pointer-events: none; }
+
+.head { display: flex; justify-content: flex-end; padding: 1.25rem 0; }
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+}
+.icon-btn:hover { color: var(--ink); }
+.icon-btn svg { width: 1.4rem; height: 1.4rem; stroke: currentColor; display: block; }
+.icon-btn .close-x { display: none; }
+.menu-input:checked ~ .head .icon-btn .open-burger { display: none; }
+.menu-input:checked ~ .head .icon-btn .close-x { display: block; }
+
+/* Řádek s odkazy je schovaný (max-height: 0) a po zaškrtnutí checkboxu
+   se rozbalí dolů - obsah pod menu se doopravdy posune, nic ho
+   nepřekrývá. */
+.row { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+.menu-input:checked ~ .row { max-height: 6rem; overflow: visible; }
+.row-inner {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 2rem;
-  align-items: baseline;
   justify-content: flex-end;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
+  align-items: baseline;
+  gap: 0.75rem 1.75rem;
+  padding: 0 0 1.25rem;
 }
-.nav { display: flex; flex-wrap: wrap; gap: 1.75rem; align-items: baseline; }
-/* Vzhled položek menu. text-transform: uppercase dělá verzálky - smaž
-   ten řádek pro normální psaní. letter-spacing je prostrkání písmen.
-   Velikost (1.02rem) a řez (300) odpovídají textu "lede" v hero bloku. */
-.nav a {
+/* Vzhled odkazů. Velikost (1.02rem) a řez (300) odpovídají textu "lede"
+   v hero bloku. */
+.row-inner a {
   font-family: var(--sans);
   font-size: 1.02rem;
   font-weight: 300;
@@ -139,11 +163,13 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   text-decoration: none;
   white-space: nowrap;
 }
-/* Při najetí se mění jen barva textu, bez podtržení. */
-.nav a:hover { color: var(--ink); }
-.nav a[aria-current="page"] { color: var(--ink); }
+.row-inner a:hover { color: var(--ink); }
+.row-inner a[aria-current="page"] { color: var(--ink); }
 
-/* Rozbalovací položka "další" - najetím myší nebo focusem (klávesnice/dotyk) */
+/* Rozbalovací položka "další" uvnitř řádku - najetím myší nebo focusem
+   (klávesnice/dotyk). .panel začíná hned pod textem (top: 100%, bez
+   mezery) a vizuální mezeru dělá jen padding-top - kurzor při cestě
+   dolů se tak "neztratí" v prázdném prostoru a panel nezmizí. */
 .nav-more { position: relative; }
 .nav-more > span {
   font-family: var(--sans);
@@ -160,7 +186,17 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .nav-more .panel {
   position: absolute;
   right: 0;
-  top: calc(100% + 0.75rem);
+  top: 100%;
+  padding-top: 0.75rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+  z-index: 5;
+}
+.nav-more:hover .panel,
+.nav-more:focus-within .panel { opacity: 1; visibility: visible; transform: translateY(0); }
+.panel-inner {
   background: var(--paper);
   border-radius: 3px;
   padding: 0.6rem 0;
@@ -168,21 +204,15 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   flex-direction: column;
   min-width: 13rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-4px);
-  transition: opacity 0.12s ease, transform 0.12s ease;
-  z-index: 5;
 }
-.nav-more .panel a {
+.panel-inner a {
   padding: 0.45rem 1.1rem;
   font-size: 0.95rem;
   color: var(--ink-soft);
+  text-decoration: none;
   text-align: right;
 }
-.nav-more .panel a:hover { color: var(--ink); background: var(--bg); }
-.nav-more:hover .panel,
-.nav-more:focus-within .panel { opacity: 1; visibility: visible; transform: translateY(0); }
+.panel-inner a:hover { color: var(--ink); background: var(--bg); }
 
 /* ---------- hero ---------- */
 
@@ -506,17 +536,28 @@ strong { font-weight: 600; }
 
 <header class="site-head">
   <div class="wrap">
-    <nav class="nav" aria-label="Hlavní menu">
-      <a href="../">úvod</a>
-      <a href="../#o-mne">o mně</a>
-      <a href="../#cena">cena</a>
-      <a href="../#kontakt">kontakt</a>
-      <div class="nav-more" tabindex="0">
-        <span>další</span>
-        <div class="panel">
-          <a href="../pst-principy/">psychoterapie + principy</a>
-          <a href="../dalsi-vzdelani/">další vzdělání</a>
-          <a href="../osobni-udaje/" aria-current="page">osobní údaje</a>
+    <input type="checkbox" id="menu-toggle" class="menu-input">
+    <div class="head">
+      <label for="menu-toggle" class="icon-btn" aria-label="Menu">
+        <svg class="open-burger" viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+        <svg class="close-x" viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+      </label>
+    </div>
+    <nav class="row" aria-label="Hlavní menu">
+      <div class="row-inner">
+        <a href="../">úvod</a>
+        <a href="../#o-mne">o mně</a>
+        <a href="../#cena">cena</a>
+        <a href="../#kontakt">kontakt</a>
+        <div class="nav-more" tabindex="0">
+          <span>další</span>
+          <div class="panel">
+            <div class="panel-inner">
+              <a href="../pst-principy/">psychoterapie + principy</a>
+              <a href="../dalsi-vzdelani/">další vzdělání</a>
+              <a href="../osobni-udaje/" aria-current="page">osobní údaje</a>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
