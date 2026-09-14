@@ -55,6 +55,7 @@
   --paper: #ffffff;
   --ink: #393939;
   --ink-soft: #666666;
+  --ink-body: #4d4d4d;   /* o něco světlejší než --ink, jen pro běžný text odstavců */
   --accent: #393939;
   --line: #e0e0e0;
   --serif: "Metropolis", "Segoe UI", Arial, sans-serif;
@@ -76,13 +77,16 @@ html { font-size: 87.5%; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--ink);
+  color: var(--ink-body);
   font-family: var(--serif);
   font-size: 1.075rem;
   font-weight: 400;
   line-height: 1.65;
   text-rendering: optimizeLegibility;
 }
+
+/* Nadpisy zůstávají tmavší (--ink) i po zesvětlení běžného textu výše. */
+h1, h2, h3 { color: var(--ink); }
 
 /* Pojistka: žádný obrázek nikdy nepřeteče mimo obrazovku. Nesahat. */
 img { max-width: 100%; height: auto; display: block; }
@@ -122,21 +126,63 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
 }
-.nav { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+.nav { display: flex; flex-wrap: wrap; gap: 1.75rem; align-items: baseline; }
 /* Vzhled položek menu. text-transform: uppercase dělá verzálky - smaž
-   ten řádek pro normální psaní. letter-spacing je prostrkání písmen. */
+   ten řádek pro normální psaní. letter-spacing je prostrkání písmen.
+   Velikost (1.02rem) a řez (300) odpovídají textu "lede" v hero bloku. */
 .nav a {
   font-family: var(--sans);
-  font-size: 0.6875rem;
-  font-weight: 400;
+  font-size: 1.02rem;
+  font-weight: 300;
   letter-spacing: 0.03em;
   color: var(--ink-soft);
   text-decoration: none;
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
+  white-space: nowrap;
 }
-.nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
-.nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
+/* Při najetí se mění jen barva textu, bez podtržení. */
+.nav a:hover { color: var(--ink); }
+.nav a[aria-current="page"] { color: var(--ink); }
+
+/* Rozbalovací položka "další" - najetím myší nebo focusem (klávesnice/dotyk) */
+.nav-more { position: relative; }
+.nav-more > span {
+  font-family: var(--sans);
+  font-size: 1.02rem;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  display: inline-block;
+  cursor: default;
+}
+.nav-more:hover > span,
+.nav-more:focus-within > span { color: var(--ink); }
+.nav-more .panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.75rem);
+  background: var(--paper);
+  border-radius: 3px;
+  padding: 0.6rem 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 13rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+  z-index: 5;
+}
+.nav-more .panel a {
+  padding: 0.45rem 1.1rem;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  text-align: right;
+}
+.nav-more .panel a:hover { color: var(--ink); background: var(--bg); }
+.nav-more:hover .panel,
+.nav-more:focus-within .panel { opacity: 1; visibility: visible; transform: translateY(0); }
 
 /* ---------- hero ---------- */
 
@@ -311,8 +357,8 @@ strong { font-weight: 600; }
 .page h1 {
   font-family: var(--sans);
   font-weight: 300;
-  font-size: clamp(1.9rem, 5.2vw, 2.75rem);
-  line-height: 1.24;
+  font-size: clamp(1.6rem, 4.2vw, 2.15rem);
+  line-height: 1.26;
   letter-spacing: 0.03em;
   margin: 0 0 1.25rem;
   max-width: 24ch;
@@ -462,9 +508,17 @@ strong { font-weight: 600; }
   <div class="wrap">
     <nav class="nav" aria-label="Hlavní menu">
       <a href="../">úvod</a>
-      <a href="../pst-principy/">psychoterapie + principy</a>
-      <a href="../dalsi-vzdelani/">další vzdělání</a>
-      <a href="../osobni-udaje/" aria-current="page">osobní údaje</a>
+      <a href="../#o-mne">o mně</a>
+      <a href="../#cena">cena</a>
+      <a href="../#kontakt">kontakt</a>
+      <div class="nav-more" tabindex="0">
+        <span>další</span>
+        <div class="panel">
+          <a href="../pst-principy/">psychoterapie + principy</a>
+          <a href="../dalsi-vzdelani/">další vzdělání</a>
+          <a href="../osobni-udaje/" aria-current="page">osobní údaje</a>
+        </div>
+      </div>
     </nav>
   </div>
 </header>

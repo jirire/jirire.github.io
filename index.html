@@ -55,6 +55,7 @@
   --paper: #ffffff;
   --ink: #393939;
   --ink-soft: #666666;
+  --ink-body: #4d4d4d;   /* o něco světlejší než --ink, jen pro běžný text odstavců */
   --accent: #393939;
   --line: #e0e0e0;
   --serif: "Metropolis", "Segoe UI", Arial, sans-serif;
@@ -76,13 +77,16 @@ html { font-size: 87.5%; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--ink);
+  color: var(--ink-body);
   font-family: var(--serif);
   font-size: 1.075rem;
   font-weight: 400;
   line-height: 1.65;
   text-rendering: optimizeLegibility;
 }
+
+/* Nadpisy zůstávají tmavší (--ink) i po zesvětlení běžného textu výše. */
+h1, h2, h3 { color: var(--ink); }
 
 /* Pojistka: žádný obrázek nikdy nepřeteče mimo obrazovku. Nesahat. */
 img { max-width: 100%; height: auto; display: block; }
@@ -174,6 +178,7 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   padding: 0.45rem 1.1rem;
   font-size: 0.95rem;
   color: var(--ink-soft);
+  text-align: right;
 }
 .nav-more .panel a:hover { color: var(--ink); background: var(--bg); }
 .nav-more:hover .panel,
