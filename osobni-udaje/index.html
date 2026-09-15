@@ -110,13 +110,15 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 /* --- HLAVIČKA A MENU -----------------------------------------------------
    Čára pod menu je odstraněná. Vrátíš ji přidáním:
        border-bottom: 1px solid var(--line);
-   Řádek .site-head .wrap { max-width: none } drží menu u pravého okraje
-   okna. Smaž ho a menu se zarovná k pravému okraji obsahu.
+   .site-head .wrap teď nepřepisuje max-width, takže se drží stejného
+   pravého okraje jako zbytek obsahu (62rem, viz .wrap výše). Ikona menu
+   je tak od kraje okna stejně daleko jako třeba text hero bloku.
+   Chceš ji zase u úplného okraje okna? Přidej sem zpátky:
+       .site-head .wrap { max-width: none; }
    ------------------------------------------------------------------------- */
 .site-head {
   background: var(--bg);
 }
-.site-head .wrap { max-width: none; padding: 0 1.5rem; }
 
 /* Skrytý checkbox pohání celé rozbalování menu - žádný JavaScript.
    Musí být sourozenec .head a .row (ne jejich rodič), jinak selektory
