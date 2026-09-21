@@ -298,22 +298,27 @@ p:last-child { margin-bottom: 0; }
 strong { font-weight: 600; }
 
 /* --- VLNOVKA MEZI BLOKY --------------------------------------------------
-   Oddělovač "~". V HTML je jako <p class="tilde" aria-hidden="true">~</p>,
+   Oddělovač - stejná vlnovka jako v ikoně menu, jen jako samostatná
+   čára. V HTML je jako <p class="tilde" aria-hidden="true"><svg>...</svg></p>,
    takže se dá kdekoli přidat nebo smazat.
    padding = mezera nad a pod vlnovkou. Celková mezera mezi bloky je
    tenhle padding + svislý padding sekcí (viz section.wrap níže).
+   font-size na .tilde určuje velikost SVG uvnitř (šířka/výška jsou v em).
    ------------------------------------------------------------------------- */
 .tilde {
-  font-family: var(--sans);
-  font-weight: 300;
   font-size: clamp(1.9rem, 5.2vw, 2.75rem);
-  line-height: 1;
-  letter-spacing: 0.03em;
   color: var(--ink);
   text-align: center;
   max-width: none;
   margin: 0;
   padding: 1.6rem 0;
+}
+.tilde svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: 2.4em;
+  height: 0.6em;
+  stroke: currentColor;
 }
 
 /* six-across photo grid */
@@ -541,7 +546,7 @@ strong { font-weight: 600; }
     <input type="checkbox" id="menu-toggle" class="menu-input">
     <div class="head">
       <label for="menu-toggle" class="icon-btn" aria-label="Menu">
-        <svg class="open-burger" viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+        <svg class="open-burger" viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M4,7 Q7,5.5 10,7 T16,7 T22,7 M4,12 Q7,10.5 10,12 T16,12 T22,12 M4,17 Q7,15.5 10,17 T16,17 T22,17" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <svg class="close-x" viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
       </label>
     </div>
@@ -592,7 +597,7 @@ strong { font-weight: 600; }
     </aside>
   </div>
 
-  <p class="tilde" aria-hidden="true">~</p>
+  <p class="tilde" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4,7 Q7,5.5 10,7 T16,7 T22,7" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
 
   <section class="wrap">
     <h2>principy, kterých se držím:</h2>
