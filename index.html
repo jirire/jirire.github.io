@@ -379,7 +379,31 @@ strong { font-weight: 600; }
 
 /* price */
 
-.price-lead, .price-note { font-size: inherit; font-family: inherit; color: inherit; }
+/* Dva sloupce jako u "o mně" (1.35fr/1fr) - hlavní info o ceně vlevo,
+   způsob platby vpravo jako menší odsazená poznámka. Pod 720px (viz
+   media query dole) se sloupce zalomí pod sebe. */
+.price-cols { display: grid; grid-template-columns: 1.35fr 1fr; gap: 3rem 4rem; align-items: start; }
+.price-lead { font-size: 1.15rem; }
+.price-lead strong { font-size: 1.2rem; }
+.price-note { font-size: 0.9rem; color: var(--ink-soft); }
+
+.payment-aside {
+  border-left: 1px solid var(--line);
+  padding-left: 1.75rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.payment-aside h3 {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 0.75rem;
+}
+.payment-aside p { margin: 0 0 1rem; max-width: none; }
+.payment-aside p:last-child { margin-bottom: 0; }
 
 /* contact */
 
@@ -537,7 +561,8 @@ strong { font-weight: 600; }
 
 @media (max-width: 720px) {
   body { font-size: 1.02rem; }
-  .about, .contact { grid-template-columns: 1fr; }
+  .about, .contact, .price-cols { grid-template-columns: 1fr; }
+  .payment-aside { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 1.5rem; }
   .intro-row { grid-template-columns: 1fr; }
   .principles { columns: 1; }
   .contact-text { text-align: left; }
@@ -676,11 +701,19 @@ strong { font-weight: 600; }
 
   <section class="wrap" id="cena">
     <h2>cena:</h2>
-    <p class="price-lead">Jedno setkání (45–50 min.) vychází na <strong>1 400 Kč</strong></p>
-    <p>Na základě domluvy je možné cenu snížit (např. studentům, kteří si terapii hradí sami, nebo rodičům samoživitelům).</p>
-    <p>Online setkání trvají 40 minut.</p>
-    <p>Setkání se hradí předem převodem. QR kód pro platbu posílám e-mailem spolu s pozvánkou na setkání. Platí to pro setkání osobní i online, pokud se nedomluvíme jinak.</p>
-    <p class="price-note">V případě absence, která není oznámena více než 48 hodin dopředu, je hrazena plná částka.</p>
+    <div class="price-cols">
+      <div>
+        <p class="price-lead">Jedno setkání (45–50 min.) vychází na <strong>1 400 Kč</strong></p>
+        <p>Na základě domluvy je možné cenu snížit (např. studentům, kteří si terapii hradí sami, nebo rodičům samoživitelům).</p>
+        <p>Online setkání trvají 40 minut.</p>
+        <p class="price-note">V případě absence, která není oznámena více než 48 hodin dopředu, je hrazena plná částka.</p>
+      </div>
+      <aside class="payment-aside">
+        <h3>způsob platby</h3>
+        <p>Setkání se hradí předem převodem. QR kód posílám e-mailem spolu s pozvánkou.</p>
+        <p>Platí pro setkání osobní i online, pokud se nedomluvíme jinak.</p>
+      </aside>
+    </div>
   </section>
 
   <p class="tilde" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4,7 Q7,5.5 10,7 T16,7 T22,7" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
