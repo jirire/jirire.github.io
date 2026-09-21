@@ -385,7 +385,8 @@ strong { font-weight: 600; }
 
 /* --- KONTAKT (tři sloupce: údaje, mapa, fotka) ---------------------------
    repeat(3, 1fr) = tři stejně široké sloupce.
-   Mapa a fotka mají shodné aspect-ratio, aby lícovaly spodní hranou.
+   Mapa a fotka mají shodné aspect-ratio (4:3, stejné jako fotky výše
+   u "kdy zvážit terapii"), aby lícovaly spodní hranou.
    ------------------------------------------------------------------------- */
 .contact { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem 2rem; align-items: start; }
 .contact-list { list-style: none; margin: 0 0 1.5rem; padding: 0; }
@@ -426,12 +427,12 @@ strong { font-weight: 600; }
 .contact-photo { margin: 0; }
 .map {
   width: 100%;
-  aspect-ratio: 100 / 87;
+  aspect-ratio: 4 / 3;
   display: block;
 }
 .contact-photo img {
   width: 100%;
-  aspect-ratio: 100 / 87;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: 75% center;
 }
