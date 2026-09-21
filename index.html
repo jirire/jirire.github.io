@@ -6,10 +6,14 @@
 <title>Poradenská psychoterapie – Mgr. BcA. Jiří Renza</title>
 <meta name="description" content="Poradenská psychoterapie v Brně a online. Dospělí, dospívající, páry a poradenství pro rodiče.">
 <link rel="canonical" href="https://www.jirirenza.cz/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:title" content="Poradenská psychoterapie – Mgr. BcA. Jiří Renza">
 <meta property="og:description" content="Poradenská psychoterapie v Brně a online. Dospělí, dospívající, páry a poradenství pro rodiče.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.jirirenza.cz/">
+<meta property="og:image" content="https://www.jirirenza.cz/img/og-image.jpg">
 <style>
 @font-face {
   font-family: "Josefin Sans";
@@ -298,22 +302,27 @@ p:last-child { margin-bottom: 0; }
 strong { font-weight: 600; }
 
 /* --- VLNOVKA MEZI BLOKY --------------------------------------------------
-   Oddělovač "~". V HTML je jako <p class="tilde" aria-hidden="true">~</p>,
+   Oddělovač - stejná vlnovka jako v ikoně menu, jen jako samostatná
+   čára. V HTML je jako <p class="tilde" aria-hidden="true"><svg>...</svg></p>,
    takže se dá kdekoli přidat nebo smazat.
    padding = mezera nad a pod vlnovkou. Celková mezera mezi bloky je
    tenhle padding + svislý padding sekcí (viz section.wrap níže).
+   font-size na .tilde určuje velikost SVG uvnitř (šířka/výška jsou v em).
    ------------------------------------------------------------------------- */
 .tilde {
-  font-family: var(--sans);
-  font-weight: 300;
   font-size: clamp(1.9rem, 5.2vw, 2.75rem);
-  line-height: 1;
-  letter-spacing: 0.03em;
   color: var(--ink);
   text-align: center;
   max-width: none;
   margin: 0;
   padding: 1.6rem 0;
+}
+.tilde svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: 2.4em;
+  height: 0.6em;
+  stroke: currentColor;
 }
 
 /* six-across photo grid */
@@ -335,7 +344,7 @@ strong { font-weight: 600; }
                    0% vlevo/nahoře, 50% (center) střed, 100% vpravo/dole */
 .card img {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: center center;
 }
@@ -345,7 +354,18 @@ strong { font-weight: 600; }
   line-height: 1.6;
 }
 
-.closing { max-width: var(--measure); margin: 4rem auto 0; text-align: center; }
+/* Šířka přes celý blok (ne úzký sloupeček) a blízko fotkám nad sebou. */
+.closing { max-width: none; margin: 1.5rem 0 0; text-align: center; }
+
+/* --- DVOJICE "PÁROVÁ TERAPIE" / "PORADENSTVÍ PRO RODIČE" ------------------
+   Sdílí třídu .cards, takže má stejnou velikost karet i stejné zlomy pro
+   menší obrazovky jako šestice výše. Na širokém okně sedí na sloupcích 3-4
+   ze šesti (na střed), pod 1040px se to resetuje na auto - viz media query
+   dole - a karty prostě padnou doleva jako zbytek.
+   ------------------------------------------------------------------------- */
+.pair-row { margin-top: 3.5rem; }
+.pair-row .card:nth-child(1) { grid-column: 3; }
+.pair-row .card:nth-child(2) { grid-column: 4; }
 
 /* about */
 
@@ -363,13 +383,38 @@ strong { font-weight: 600; }
 
 /* price */
 
-.price-lead, .price-note { font-size: inherit; font-family: inherit; color: inherit; }
+/* Dva sloupce jako u "o mně" (1.35fr/1fr) - hlavní info o ceně vlevo,
+   způsob platby vpravo jako menší odsazená poznámka. Pod 720px (viz
+   media query dole) se sloupce zalomí pod sebe. */
+.price-cols { display: grid; grid-template-columns: 1.35fr 1fr; gap: 3rem 4rem; align-items: start; }
+.price-lead { font-size: 1.15rem; }
+.price-lead strong { font-size: 1.2rem; }
+.price-note { font-size: 0.9rem; color: var(--ink-soft); }
+
+.payment-aside {
+  border-left: 1px solid var(--line);
+  padding-left: 1.75rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.payment-aside h3 {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 0.75rem;
+}
+.payment-aside p { margin: 0 0 1rem; max-width: none; }
+.payment-aside p:last-child { margin-bottom: 0; }
 
 /* contact */
 
 /* --- KONTAKT (tři sloupce: údaje, mapa, fotka) ---------------------------
    repeat(3, 1fr) = tři stejně široké sloupce.
-   Mapa a fotka mají shodné aspect-ratio, aby lícovaly spodní hranou.
+   Mapa a fotka mají shodné aspect-ratio (4:3, stejné jako fotky výše
+   u "kdy zvážit terapii"), aby lícovaly spodní hranou.
    ------------------------------------------------------------------------- */
 .contact { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem 2rem; align-items: start; }
 .contact-list { list-style: none; margin: 0 0 1.5rem; padding: 0; }
@@ -410,12 +455,12 @@ strong { font-weight: 600; }
 .contact-photo { margin: 0; }
 .map {
   width: 100%;
-  aspect-ratio: 100 / 87;
+  aspect-ratio: 4 / 3;
   display: block;
 }
 .contact-photo img {
   width: 100%;
-  aspect-ratio: 100 / 87;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: 75% center;
 }
@@ -504,6 +549,10 @@ strong { font-weight: 600; }
 @media (max-width: 1040px) {
   .cards { grid-template-columns: repeat(3, 1fr); }
   .principles { columns: 2; }
+  /* Pevné umístění dvojice na sloupec 3-4 platí jen pro šest sloupců -
+     tady necháme karty padnout doleva jako zbytek mřížky. */
+  .pair-row .card:nth-child(1),
+  .pair-row .card:nth-child(2) { grid-column: auto; }
 }
 
 @media (max-width: 640px) {
@@ -516,7 +565,8 @@ strong { font-weight: 600; }
 
 @media (max-width: 720px) {
   body { font-size: 1.02rem; }
-  .about, .contact { grid-template-columns: 1fr; }
+  .about, .contact, .price-cols { grid-template-columns: 1fr; }
+  .payment-aside { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 1.5rem; }
   .intro-row { grid-template-columns: 1fr; }
   .principles { columns: 1; }
   .contact-text { text-align: left; }
@@ -541,7 +591,7 @@ strong { font-weight: 600; }
     <input type="checkbox" id="menu-toggle" class="menu-input">
     <div class="head">
       <label for="menu-toggle" class="icon-btn" aria-label="Menu">
-        <svg class="open-burger" viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+        <svg class="open-burger" viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M4,7 Q7,5.5 10,7 T16,7 T22,7 M4,12 Q7,10.5 10,12 T16,12 T22,12 M4,17 Q7,15.5 10,17 T16,17 T22,17" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <svg class="close-x" viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
       </label>
     </div>
@@ -580,7 +630,7 @@ strong { font-weight: 600; }
     </figure>
   </div>
 
-  <p class="tilde" aria-hidden="true">~</p>
+  <p class="tilde" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4,7 Q7,5.5 10,7 T16,7 T22,7" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
 
   <section class="wrap" id="kdy">
     <h2>kdy je dobré zvážit terapii:</h2>
@@ -617,9 +667,21 @@ strong { font-weight: 600; }
     </div>
 
     <p class="closing">Nebo prostě potřeba zkusit něco trochu jinak – posunout se dál, dát si věci do pořádku nebo prožít život plněji. Ať už jde o to koukat méně do telefonu, nebo mít v situaci, která se zdá zcela bezvýchodná, někoho, kdo vás vyslechne.</p>
+
+    <div class="cards pair-row">
+      <figure class="card">
+        <img src="img/parova-terapie-800.webp" srcset="img/parova-terapie-400.webp 400w, img/parova-terapie-800.webp 800w" sizes="(max-width: 640px) 50vw, (max-width: 1040px) 30vw, 10rem" alt="" loading="lazy">
+        <figcaption><strong>Párová terapie.</strong> Odcizení v partnerském vztahu nebo opakující se konflikty, které se nedaří vyřešit sami.</figcaption>
+      </figure>
+
+      <figure class="card">
+        <img src="img/poradenstvi-rodice-800.webp" srcset="img/poradenstvi-rodice-400.webp 400w, img/poradenstvi-rodice-800.webp 800w" sizes="(max-width: 640px) 50vw, (max-width: 1040px) 30vw, 10rem" alt="" loading="lazy">
+        <figcaption><strong>Poradenství pro rodiče.</strong> Potřeba lépe rozumět emocím dítěte a zvládat vypjaté chvíle bez ztráty klidu.</figcaption>
+      </figure>
+    </div>
   </section>
 
-  <p class="tilde" aria-hidden="true">~</p>
+  <p class="tilde" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4,7 Q7,5.5 10,7 T16,7 T22,7" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
 
   <section class="wrap" id="o-mne">
     <h2>o mně:</h2>
@@ -639,27 +701,26 @@ strong { font-weight: 600; }
     </div>
   </section>
 
-  <p class="tilde" aria-hidden="true">~</p>
+  <p class="tilde" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4,7 Q7,5.5 10,7 T16,7 T22,7" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
 
   <section class="wrap" id="cena">
     <h2>cena:</h2>
-    <p class="price-lead">Jedno setkání (45–50 min.) vychází na <strong>1 400 Kč</strong></p>
-    <p>Na základě domluvy je možné cenu snížit (např. studentům, kteří si terapii hradí sami, nebo rodičům samoživitelům).</p>
-    <p>Online setkání trvají 40 minut.</p>
-    <p>Setkání se hradí předem převodem. QR kód pro platbu posílám e-mailem spolu s pozvánkou na setkání. Platí to pro setkání osobní i online, pokud se nedomluvíme jinak.</p>
-    <p class="price-note">V případě absence, která není oznámena více než 48 hodin dopředu, je hrazena plná částka.</p>
+    <div class="price-cols">
+      <div>
+        <p class="price-lead">Jedno setkání (45–50 min.) vychází na <strong>1 400 Kč</strong></p>
+        <p>Na základě domluvy je možné cenu snížit (např. studentům, kteří si terapii hradí sami, nebo rodičům samoživitelům).</p>
+        <p>Online setkání trvají 40 minut.</p>
+        <p class="price-note">V případě absence, která není oznámena více než 48 hodin dopředu, je hrazena plná částka.</p>
+      </div>
+      <aside class="payment-aside">
+        <h3>způsob platby</h3>
+        <p>Setkání se hradí předem převodem. QR kód posílám e-mailem spolu s pozvánkou.</p>
+        <p>Platí pro setkání osobní i online, pokud se nedomluvíme jinak.</p>
+      </aside>
+    </div>
   </section>
 
-  <p class="tilde" aria-hidden="true">~</p>
-
-  <section class="wrap" id="objednani">
-    <h2>objednání:</h2>
-    <p>Pracuji s dospělými, dospívajícími a s páry. Rodičům nabízím také poradenství ohledně výchovy.</p>
-    <p>Objednat se můžete e-mailem na <a href="mailto:jrenza2@gmail.com">jrenza2@gmail.com</a>. Napište prosím krátce, o co jde a kdy se vám termín hodí – ozvu se s návrhem.</p>
-    <p>Konzultace vedu česky i anglicky.</p>
-  </section>
-
-  <p class="tilde" aria-hidden="true">~</p>
+  <p class="tilde" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4,7 Q7,5.5 10,7 T16,7 T22,7" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
 
   <section class="wrap" id="kontakt">
     <div class="contact">
