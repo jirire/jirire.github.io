@@ -354,18 +354,16 @@ strong { font-weight: 600; }
   line-height: 1.6;
 }
 
-/* Šířka přes celý blok (ne úzký sloupeček) a blízko fotkám nad sebou. */
-.closing { max-width: none; margin: 1.5rem 0 0; text-align: center; }
+/* Šířka přes celý blok (ne úzký sloupeček), blízko fotkám nad sebou,
+   zarovnáno doleva stejně jako dvojice karet pod tím. */
+.closing { max-width: none; margin: 1.5rem 0 0; text-align: left; }
 
 /* --- DVOJICE "PÁROVÁ TERAPIE" / "PORADENSTVÍ PRO RODIČE" ------------------
    Sdílí třídu .cards, takže má stejnou velikost karet i stejné zlomy pro
-   menší obrazovky jako šestice výše. Na širokém okně sedí na sloupcích 3-4
-   ze šesti (na střed), pod 1040px se to resetuje na auto - viz media query
-   dole - a karty prostě padnou doleva jako zbytek.
+   menší obrazovky jako šestice výše. Karty padnou doleva (sloupce 1-2 ze
+   šesti) stejně jako zbytek mřížky nad nimi.
    ------------------------------------------------------------------------- */
 .pair-row { margin-top: 3.5rem; }
-.pair-row .card:nth-child(1) { grid-column: 3; }
-.pair-row .card:nth-child(2) { grid-column: 4; }
 
 /* about */
 
@@ -549,10 +547,6 @@ strong { font-weight: 600; }
 @media (max-width: 1040px) {
   .cards { grid-template-columns: repeat(3, 1fr); }
   .principles { columns: 2; }
-  /* Pevné umístění dvojice na sloupec 3-4 platí jen pro šest sloupců -
-     tady necháme karty padnout doleva jako zbytek mřížky. */
-  .pair-row .card:nth-child(1),
-  .pair-row .card:nth-child(2) { grid-column: auto; }
 }
 
 @media (max-width: 640px) {
