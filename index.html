@@ -144,7 +144,8 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   align-items: center;
 }
 .icon-btn:hover { color: var(--ink); }
-.icon-btn svg { width: 1.4rem; height: 1.4rem; stroke: currentColor; display: block; }
+/* Velikost odpovídá vlnovce mezi bloky (.tilde) - stejná clamp funkce. */
+.icon-btn svg { width: clamp(1.9rem, 5.2vw, 2.75rem); height: clamp(1.9rem, 5.2vw, 2.75rem); stroke: currentColor; display: block; }
 .icon-btn .close-x { display: none; }
 .menu-input:checked ~ .head .icon-btn .open-burger { display: none; }
 .menu-input:checked ~ .head .icon-btn .close-x { display: block; }
@@ -276,6 +277,9 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   margin: 10.5rem 0 0 auto;
   text-align: left;
 }
+/* Titul (Mgr. BcA.) ustupuje do pozadí, jméno je výraznější. */
+.hero .byline .byline-title { color: #999999; }
+.hero .byline .byline-name { color: var(--ink); }
 .hero-figure { margin: 0; }
 .hero-figure img { width: 100%; }
 
@@ -358,6 +362,12 @@ strong { font-weight: 600; }
   font-size: 0.95rem;
   line-height: 1.6;
 }
+
+/* U šestice "kdy je dobré zvážit psychoterapii" je pořadí prohozené -
+   text nad fotkou. Pořadí v HTML zůstává (fotka, pak text) kvůli
+   čtečkám obrazovky; obrací se jen vizuálně. */
+#kdy > .cards:not(.pair-row) .card { display: flex; flex-direction: column-reverse; }
+#kdy > .cards:not(.pair-row) .card figcaption { margin-top: 0; margin-bottom: 0.85rem; }
 
 /* Šířka přes celý blok (ne úzký sloupeček), blízko fotkám nad sebou,
    zarovnáno doleva stejně jako dvojice karet pod tím. */
@@ -623,7 +633,7 @@ strong { font-weight: 600; }
       <h1>poradenská psychoterapie</h1>
       <p class="lede">individuální psychoterapie pro dospělé a dospívající</p>
       <p class="lede">párová terapie, poradenství pro rodiče</p>
-      <p class="byline">MGR. BCA. JIŘÍ RENZA</p>
+      <p class="byline"><span class="byline-title">Mgr. BcA.</span> <span class="byline-name">Jiří Renza</span></p>
     </div>
     <figure class="hero-figure">
       <img src="img/hero-800.webp" srcset="img/hero-400.webp 400w, img/hero-800.webp 800w" sizes="(max-width: 720px) 100vw, 26rem" alt="">
