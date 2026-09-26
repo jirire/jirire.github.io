@@ -130,6 +130,10 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .menu-input { position: absolute; opacity: 0; pointer-events: none; }
 
 .head { display: flex; justify-content: flex-end; padding: 1.25rem 0; }
+/* Na velké obrazovce posune ikonu menu kousek za pravý okraj obsahu. */
+@media (min-width: 1041px) {
+  .head { margin-right: -2rem; }
+}
 .icon-btn {
   background: none;
   border: none;
@@ -270,6 +274,7 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   font-size: 1.02rem;
   letter-spacing: 0.03em;
   margin: 10.5rem 0 0 auto;
+  text-align: left;
 }
 .hero-figure { margin: 0; }
 .hero-figure img { width: 100%; }
@@ -546,6 +551,7 @@ strong { font-weight: 600; }
 @media (max-width: 1040px) {
   .cards { grid-template-columns: repeat(3, 1fr); }
   .principles { columns: 2; }
+  .hero-figure img { width: 80%; margin: 0 auto; }
 }
 
 @media (max-width: 640px) {
@@ -567,6 +573,7 @@ strong { font-weight: 600; }
   .hero { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.25rem; }
   .hero-text { max-width: none; margin-left: 0; text-align: left; }
   .hero h1 { margin-left: 0; }
+  .hero-figure img { width: 100%; margin: 0; }
   .lead-figure img { aspect-ratio: 4 / 3; }
 }
 
