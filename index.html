@@ -341,28 +341,18 @@ strong { font-weight: 600; }
    Počet sloupců na menších obrazovkách se mění v @media blocích na konci.
    gap = mezery; první hodnota svisle, druhá vodorovně.
    ------------------------------------------------------------------------- */
-/* Text je vizuálně nad fotkou (pořadí v HTML zůstává fotka, pak text,
-   kvůli čtečkám obrazovky). .card je subgrid se dvěma řádky (text,
-   fotka) sdílenými s rodičovským gridem - díky tomu mají všechny
-   karty na stejném řádku stejně vysoký textový pruh a fotky pod nimi
-   lícují, i když se délka textu liší. Platí stejně pro šestici i pro
-   dvojici karet pod tím. */
 .cards {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: auto auto;
   gap: 0.6rem 1.75rem;
 }
-.card {
-  margin: 0;
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: span 2;
-  row-gap: 0.6rem;
-}
+/* Text je vizuálně nad fotkou (pořadí v HTML zůstává fotka, pak text,
+   kvůli čtečkám obrazovky) - otočeno přes column-reverse. Výška
+   textu je u každé karty nezávislá, takže se fotky pod delšími a
+   kratšími popisky mohou mírně lišit ve výšce - to je bezpečnější
+   napříč prohlížeči než vynucené zarovnání do společné řady. */
+.card { margin: 0; display: flex; flex-direction: column-reverse; }
 .card figcaption {
-  grid-row: 1;
-  align-self: start;
   margin: 0 0 0.85rem;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -372,7 +362,6 @@ strong { font-weight: 600; }
    object-position kam se výřez posune: vodorovně, svisle
                    0% vlevo/nahoře, 50% (center) střed, 100% vpravo/dole */
 .card img {
-  grid-row: 2;
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
