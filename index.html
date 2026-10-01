@@ -348,12 +348,15 @@ strong { font-weight: 600; }
   align-items: start;
 }
 /* Text je vizuálně nad fotkou (pořadí v HTML zůstává fotka, pak text,
-   kvůli čtečkám obrazovky) - otočeno přes column-reverse. Výška
-   textu je u každé karty nezávislá, takže se fotky pod delšími a
-   kratšími popisky mohou mírně lišit ve výšce - to je bezpečnější
-   napříč prohlížeči než vynucené zarovnání do společné řady. */
+   kvůli čtečkám obrazovky) - otočeno přes column-reverse. */
 .card { margin: 0; display: flex; flex-direction: column-reverse; }
+/* min-height rezervuje místo pro nejdelší popisek v dané šířce
+   sloupce, aby fotky pod kratšími popisky začínaly ve stejné výšce
+   jako ty pod nejdelším - pevná hodnota místo grid subgridu je
+   bezpečnější napříč prohlížeči (viz zlomy níže, kde se min-height
+   mění s počtem sloupců). */
 .card figcaption {
+  min-height: 9.15rem;
   margin: 0 0 0.85rem;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -560,12 +563,14 @@ strong { font-weight: 600; }
 
 @media (max-width: 1040px) {
   .cards { grid-template-columns: repeat(3, 1fr); }
+  .card figcaption { min-height: 4.6rem; }
   .principles { columns: 2; }
   .hero-figure img { width: 80%; margin: 0 auto; }
 }
 
 @media (max-width: 640px) {
   .cards { grid-template-columns: repeat(2, 1fr); gap: 0.6rem 1rem; }
+  .card figcaption { min-height: 3.1rem; }
 }
 
 @media (max-width: 400px) {
