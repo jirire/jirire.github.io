@@ -341,33 +341,42 @@ strong { font-weight: 600; }
    Počet sloupců na menších obrazovkách se mění v @media blocích na konci.
    gap = mezery; první hodnota svisle, druhá vodorovně.
    ------------------------------------------------------------------------- */
+/* Text je vizuálně nad fotkou (pořadí v HTML zůstává fotka, pak text,
+   kvůli čtečkám obrazovky). .card je subgrid se dvěma řádky (text,
+   fotka) sdílenými s rodičovským gridem - díky tomu mají všechny
+   karty na stejném řádku stejně vysoký textový pruh a fotky pod nimi
+   lícují, i když se délka textu liší. Platí stejně pro šestici i pro
+   dvojici karet pod tím. */
 .cards {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto auto;
   gap: 3rem 1.75rem;
 }
-.card { margin: 0; }
+.card {
+  margin: 0;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
+}
+.card figcaption {
+  grid-row: 1;
+  align-self: end;
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
 /* aspect-ratio    tvar výřezu (1/1 = čtverec, 3/2 = na šířku)
    object-fit      cover = vyplnit a oříznout, contain = vejít se celý
    object-position kam se výřez posune: vodorovně, svisle
                    0% vlevo/nahoře, 50% (center) střed, 100% vpravo/dole */
 .card img {
+  grid-row: 2;
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: center center;
 }
-.card figcaption {
-  margin-top: 0.85rem;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-/* U šestice "kdy je dobré zvážit psychoterapii" je pořadí prohozené -
-   text nad fotkou. Pořadí v HTML zůstává (fotka, pak text) kvůli
-   čtečkám obrazovky; obrací se jen vizuálně. */
-#kdy > .cards:not(.pair-row) .card { display: flex; flex-direction: column-reverse; }
-#kdy > .cards:not(.pair-row) .card figcaption { margin-top: 0; margin-bottom: 0.85rem; }
 
 /* Šířka přes celý blok (ne úzký sloupeček), blízko fotkám nad sebou,
    zarovnáno doleva stejně jako dvojice karet pod tím. */
