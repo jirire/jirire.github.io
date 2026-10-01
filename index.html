@@ -345,6 +345,7 @@ strong { font-weight: 600; }
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 0.6rem 1.75rem;
+  align-items: start;
 }
 /* Text je vizuálně nad fotkou (pořadí v HTML zůstává fotka, pak text,
    kvůli čtečkám obrazovky) - otočeno přes column-reverse. Výška
@@ -370,7 +371,7 @@ strong { font-weight: 600; }
 
 /* Šířka přes celý blok (ne úzký sloupeček), blízko fotkám nad sebou,
    zarovnáno doleva stejně jako dvojice karet pod tím. */
-.closing { max-width: none; margin: 1.5rem 0 0; text-align: left; }
+.closing { max-width: none; margin: 1.5rem 0 0; text-align: left; font-size: 0.95rem; }
 
 /* --- DVOJICE "PÁROVÁ TERAPIE" / "PORADENSTVÍ PRO RODIČE" ------------------
    Sdílí třídu .cards, takže má stejnou velikost karet i stejné zlomy pro
